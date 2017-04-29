@@ -1,16 +1,79 @@
-<!doctype html>
-<html lang= "en-us">
+<!DOCTYPE html>
+<html lang = "en-us">
 <body>
-	<script>
 
 
+    <h1>The Psychic Game</h1>
+    <h3>Guess what letter I'm thinking of: </h3>
+     <h3>Wins:
+      <p id="wins"></p>
+    </h3>
+    <h3>Losses:
+      <p id="loses"></p>
+    </h3>
+    <h3>Guess left:
+      <p id="guessLeft"></p>
+    </h3>
+   <h3>Your guesses so far: </h3>
+    <p id="guessed"></p>
+    
+  
+  </body>
+<script>
 
-	</script>
+var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var wins = 0;
+var loses = 0;
+var guessesLeft, guessedLetters, letterToGuess;
 
+resetGame();
+display();
 
+document.onkeyup = function(event) {
+  var guess = event.key;
+  if (guess === letterToGuess) {
+    win();
+  } else if (guessesLeft - 1 === 0) {
+    lost();
+  } else {
+    fail(guess);
+  }
 
-</body>
+  display();
+}
 
+function display() {
+  var winsP = document.getElementById("wins");
+  var losesP = document.getElementById("loses");
+  var guessLeft = document.getElementById("guessLeft");
+  var letterGuessed = document.getElementById("guessed");
+  winsP.innerHTML = wins;
+  losesP.innerHTML = loses;
+  guessLeft.innerHTML = guessesLeft;
+  letterGuessed.innerHTML = guessedLetters.join(',');
+}
 
+function win() {
+  wins++;
+  resetGame();
+}
+
+function lost() {
+  loses++;
+  resetGame();
+}
+
+function fail(letter) {
+  guessesLeft--;
+  guessedLetters.push(letter);
+}
+
+function resetGame() {
+  guessesLeft = 9;
+  guessedLetters = [];
+  letterToGuess = letters[Math.floor(Math.random() * letters.length)];
+  console.log("Letter to guess: " + letterToGuess);
+}
+</script>
 
 </html>
